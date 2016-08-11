@@ -1,42 +1,50 @@
 import React, { Component } from 'react';
-// import CalculatorResults from './CalculatorResults';
-// import InputButtons from './CalculatorButtons'
-// import './App.css';
+import ResultsDisplay from './ResultsDisplay';
+import InputButtons from './InputButtons';
 
-class Calculator extends Component {
+class Calculator extends Component {  
+  get clearState() {
+    return {
+      result: null,
+      previousInput: null,
+      actionInput: null,
+      currentInput: null
+    }
+  }
+
   constructor() {
     super();
-    this.state = {
-      result: null
+    this.state = this.clearState;
+  }
+
+  addToCurrentInput(digit) {
+    let newCurrentInput;
+
+    if(this.state.currentInput === null) {
+      newCurrentInput = digit;
+    } else {
+      newCurrentInput = this.state.currentInput + digit;
     }
+
+    this.setState({
+      currentInput: newCurrentInput
+    });
+  }
+
+  clear() {
+    this.setState(this.clearState);
   }
 
   render() {
     return (
       <div>
-        <CalculatorResults />
-        <CalculatorInputButtons />
+        <ResultsDisplay results={this.state.result}/>
+        <InputButtons addToCurrentInput={this.addToCurrentInput.bind(this)}/>
       </div>
     );
   }
 }
 
 export default Calculator;
-
-class CalculatorResults extends Component {
-  render() {
-    return (
-      <p>Calculator results go here!</p>
-    );
-  }
-}
-
-class CalculatorInputButtons extends Component {
-  render() {
-    return (
-      <p>Calculator input buttons go here!</p>
-    );
-  }
-}
 
 

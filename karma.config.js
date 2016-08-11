@@ -19,6 +19,8 @@ webpackConfig.module.postLoaders = [ {
 } ]
 
 module.exports = function (config) {
+  var sourcePreprocessors = ['webpack', 'coverage'];
+
   config.set({
     frameworks: [ 'mocha', 'chai' ],
     files: [
@@ -39,8 +41,8 @@ module.exports = function (config) {
     ],
     browsers: [ 'PhantomJS' ],
     preprocessors: {
-      'tests/**/**.js': [ 'webpack', 'coverage' ],
-      'src/**/*.js': [ 'webpack', 'coverage' ]
+      'tests/**/**.js': sourcePreprocessors,
+      'src/**/*.js': sourcePreprocessors
     },
     reporters: [ 'spec', 'coverage' ],
     coverageReporter: {
