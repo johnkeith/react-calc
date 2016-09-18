@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
-import ResultsDisplay from './ResultsDisplay';
+import InputDisplay from './InputDisplay';
 import InputButtons from './InputButtons';
 
 class Calculator extends Component {  
   get clearState() {
     return {
-      result: null,
       previousInput: null,
       actionInput: null,
       currentInput: null
@@ -38,7 +37,7 @@ class Calculator extends Component {
   render() {
     return (
       <div>
-        <ResultsDisplay results={this.state.result}/>
+        <InputDisplay currentInput={this.state.currentInput}/>
         <InputButtons addToCurrentInput={this.addToCurrentInput.bind(this)}/>
       </div>
     );

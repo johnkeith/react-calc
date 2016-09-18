@@ -20,8 +20,8 @@ describe('<Calculator />', () => {
     expect(wrapper.type()).to.eql('div');
   });
 
-  it('should render sub components for ResultsDisplay', () => {
-    expect(wrapper.find('ResultsDisplay').length).to.eql(1);
+  it('should render sub components for InputDisplay', () => {
+    expect(wrapper.find('InputDisplay').length).to.eql(1);
   });
 
   it('should render sub components for InputButtons', () => {
