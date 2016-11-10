@@ -5,9 +5,9 @@ import InputButtons from './InputButtons';
 class Calculator extends Component {  
   get clearState() {
     return {
-      previousInput: null,
-      actionInput: null,
-      currentInput: null
+      beforeOperatorInput: null,
+      operatorInput: null,
+      afterOperatorInput: null
     }
   }
 
@@ -16,17 +16,41 @@ class Calculator extends Component {
     this.state = this.clearState;
   }
 
-  addToCurrentInput(digit) {
-    let newCurrentInput;
-
-    if(this.state.currentInput === null) {
-      newCurrentInput = digit;
+  addToInput(digit) {
+    if(this.state.operatorInput) {
+      this.addToAfterOperatorInput(digit);
     } else {
-      newCurrentInput = this.state.currentInput + digit;
+      this.addToBeforeOperatorInput(digit);
     }
+  }
+
+  addToBeforeOperatorInput(digit) {
+    let newValue = this.buildNewInputForPosition(digit, 'beforeOperatorInput'); 
 
     this.setState({
-      currentInput: newCurrentInput
+      beforeOperatorInput: newValue
+    });
+  }
+
+  addToAfterOperatorInput(digit) {
+    let newValue = this.buildNewInputForPosition(digit, 'afterOperatorInput'); 
+
+    this.setState({
+      afterOperatorInput: newValue
+    });
+  }
+
+  buildNewInputForPosition(digit, inputPosition) {
+    if(this.state[inputPosition] === null) {
+      return digit;
+    }
+
+    return this.state[inputPosition] + digit;
+  }
+
+  setOperator(operator) {
+    this.setState({
+      operatorInput: operator
     });
   }
 
@@ -37,8 +61,14 @@ class Calculator extends Component {
   render() {
     return (
       <div>
-        <InputDisplay currentInput={this.state.currentInput}/>
-        <InputButtons addToCurrentInput={this.addToCurrentInput.bind(this)}/>
+        <InputDisplay 
+          beforeOperatorInput={this.state.beforeOperatorInput}
+          afterOperatorInput={this.state.afterOperatorInput} 
+          operatorInput={this.state.operatorInput}/>
+        <InputButtons
+          beforeOperatorInput={this.state.beforeOperatorInput}
+          addToInput={this.addToInput.bind(this)}
+          setOperator={this.setOperator.bind(this)} />
       </div>
     );
   }
