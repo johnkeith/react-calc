@@ -58,6 +58,10 @@ class Calculator extends Component {
     this.setState(this.clearState);
   }
 
+  calculate() {
+    eval()
+  }
+
   render() {
     return (
       <div>
