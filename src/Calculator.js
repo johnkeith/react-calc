@@ -13,7 +13,7 @@ class Calculator extends Component {
       '+': this.add,
       '-': this.subtract,
       'x': this.multiply,
-      '%': this.divide
+      '÷': this.divide
     }
   }  
 
@@ -113,17 +113,28 @@ class Calculator extends Component {
     return (
       <div>
         <InputDisplay 
+          
           beforeOperatorInput={this.state.beforeOperatorInput}
+          
           afterOperatorInput={this.state.afterOperatorInput} 
+          
           operatorInput={this.state.operatorInput}
+          
           results={this.state.results} />
+        
         <InputButtons
           beforeOperatorInput={this.state.beforeOperatorInput}
+          
           operatorInput={this.state.operatorInput}
+          
           afterOperatorInput={this.state.afterOperatorInput}
+          
           addToInput={this.addToInput.bind(this) }
+          
           setOperator={this.setOperator.bind(this) }
+          
           calculateAndSetResults={this.calculateAndSetResults.bind(this) }
+
           performAction={this.performAction.bind(this) } />
       </div>
     );
