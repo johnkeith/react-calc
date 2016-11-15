@@ -2,18 +2,44 @@ import React, { Component } from 'react';
 import InputDisplay from './InputDisplay';
 import InputButtons from './InputButtons';
 
-class Calculator extends Component {  
+class Calculator extends Component {
+  constructor() {
+    super();
+    this.state = this.clearState;
+  }
+
+  get operatorFunctionMap() {
+    return {
+      '+': this.add,
+      '-': this.subtract,
+      'x': this.multiply,
+      '%': this.divide
+    }
+  }  
+
   get clearState() {
     return {
       beforeOperatorInput: null,
       operatorInput: null,
-      afterOperatorInput: null
+      afterOperatorInput: null,
+      results: null
     }
   }
 
-  constructor() {
-    super();
-    this.state = this.clearState;
+  add(x, y) {
+    return parseFloat(x) + parseFloat(y);
+  }
+
+  subtract(x, y) {
+    return parseFloat(x) - parseFloat(y);
+  }
+
+  multiply(x, y) {
+    return parseFloat(x) * parseFloat(y);
+  }
+
+  divide(x, y) {
+    return parseFloat(x) / parseFloat(y);
   }
 
   addToInput(digit) {
@@ -58,8 +84,29 @@ class Calculator extends Component {
     this.setState(this.clearState);
   }
 
-  calculate() {
-    eval()
+  calculateAndSetResults() {
+    const operator = this.state.operatorInput;
+    const beforeOperatorInput = this.state.beforeOperatorInput;
+    const afterOperatorInput = this.state.afterOperatorInput;
+    const results = this.operatorFunctionMap[operator](beforeOperatorInput, afterOperatorInput);
+
+    this.setResults(results);
+  }
+
+  setResults(results) {
+    this.setState({
+      results: results
+    });
+  }
+
+  performAction(actionType) {
+    switch(actionType) {
+      case 'AC':
+        this.clear();
+        break;
+      default:
+        return null
+    }
   }
 
   render() {
@@ -68,11 +115,16 @@ class Calculator extends Component {
         <InputDisplay 
           beforeOperatorInput={this.state.beforeOperatorInput}
           afterOperatorInput={this.state.afterOperatorInput} 
-          operatorInput={this.state.operatorInput}/>
+          operatorInput={this.state.operatorInput}
+          results={this.state.results} />
         <InputButtons
           beforeOperatorInput={this.state.beforeOperatorInput}
-          addToInput={this.addToInput.bind(this)}
-          setOperator={this.setOperator.bind(this)} />
+          operatorInput={this.state.operatorInput}
+          afterOperatorInput={this.state.afterOperatorInput}
+          addToInput={this.addToInput.bind(this) }
+          setOperator={this.setOperator.bind(this) }
+          calculateAndSetResults={this.calculateAndSetResults.bind(this) }
+          performAction={this.performAction.bind(this) } />
       </div>
     );
   }

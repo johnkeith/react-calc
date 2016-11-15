@@ -13,7 +13,7 @@ class InputButtons extends Component {
         { type: 'number-button', value: '7', onClick: 'addToInput' },
         { type: 'number-button', value: '8', onClick: 'addToInput' },
         { type: 'number-button', value: '9', onClick: 'addToInput' },
-        { type: 'operator-button', value: '*', onClick: 'setOperator' },
+        { type: 'operator-button', value: 'x', onClick: 'setOperator' },
       ],
       thirdRow: [
         { type: 'number-button', value: '4', onClick: 'addToInput' },
@@ -30,7 +30,7 @@ class InputButtons extends Component {
       fifthRow: [
         { type: 'number-button', value: '0', onClick: 'addToInput' },
         { type: 'number-button', value: '.', onClick: 'addToInput' },
-        { type: 'calculate-button', value: '=', onClick: 'calculate' },
+        { type: 'calculate-button', value: '=', onClick: 'calculateAndSetResults' },
       ]
     }  
 
@@ -39,11 +39,14 @@ class InputButtons extends Component {
     for(const key in buttons) {
       if(buttons[key]) {
         buttons[key].forEach((row, index) => {
+          const shouldDisableOperatorButton = row.type === 'operator-button' && !this.props.beforeOperatorInput ? true : false;
+          const shouldDisableCalculateButton = row.type === 'calculate-button' && (!this.props.beforeOperatorInput || !this.props.operatorInput || !this.props.afterOperatorInput ? true : false);
+
           buttonsRendered.push(
             <button key={`${index}-${row.type}-${row.value}`}
               className={row.type}
               onClick={() => this.props[row.onClick](row.value) }
-              disabled={row.type === 'operator-button' && !this.props.beforeOperatorInput ? true : false} >
+              disabled={ shouldDisableOperatorButton || shouldDisableCalculateButton } >
               {row.value}
             </button>
           );
