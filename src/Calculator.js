@@ -22,7 +22,6 @@ class Calculator extends Component {
       beforeOperatorInput: null,
       operatorInput: null,
       afterOperatorInput: null,
-      results: null
     }
   }
 
@@ -40,6 +39,10 @@ class Calculator extends Component {
 
   divide(x, y) {
     return parseFloat(x) / parseFloat(y);
+  }
+
+  percentage(x) {
+    return parseFloat(x) / 100;
   }
 
   addToInput(digit) {
@@ -90,19 +93,31 @@ class Calculator extends Component {
     const afterOperatorInput = this.state.afterOperatorInput;
     const results = this.operatorFunctionMap[operator](beforeOperatorInput, afterOperatorInput);
 
-    this.setResults(results);
+    this.clear();
+    this.setState({
+      beforeOperatorInput: results
+    });
   }
 
-  setResults(results) {
-    this.setState({
-      results: results
-    });
+  calculatePercentage() {
+    if(this.state.afterOperatorInput) {
+      this.setState({
+        afterOperatorInput: this.percentage(this.state.afterOperatorInput)
+      });
+    } else if(this.state.beforeOperatorInput) {
+      this.setState({
+        beforeOperatorInput: this.percentage(this.state.beforeOperatorInput)
+      });
+    }
   }
 
   performAction(actionType) {
     switch(actionType) {
       case 'AC':
         this.clear();
+        break;
+      case '%':
+        this.calculatePercentage();
         break;
       default:
         return null
@@ -113,28 +128,17 @@ class Calculator extends Component {
     return (
       <div>
         <InputDisplay 
-          
           beforeOperatorInput={this.state.beforeOperatorInput}
-          
           afterOperatorInput={this.state.afterOperatorInput} 
-          
-          operatorInput={this.state.operatorInput}
-          
-          results={this.state.results} />
+          operatorInput={this.state.operatorInput} />
         
         <InputButtons
           beforeOperatorInput={this.state.beforeOperatorInput}
-          
           operatorInput={this.state.operatorInput}
-          
           afterOperatorInput={this.state.afterOperatorInput}
-          
           addToInput={this.addToInput.bind(this) }
-          
           setOperator={this.setOperator.bind(this) }
-          
           calculateAndSetResults={this.calculateAndSetResults.bind(this) }
-
           performAction={this.performAction.bind(this) } />
       </div>
     );

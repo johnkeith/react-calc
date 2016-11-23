@@ -1,27 +1,23 @@
 import React, { PropTypes as T } from 'react';
 
-const InputDisplay = ({ beforeOperatorInput, afterOperatorInput, operatorInput, results }) => {
+const InputDisplay = ({ beforeOperatorInput, afterOperatorInput, operatorInput }) => {
   const spacer = "\u00a0";
 
   let display = [];
 
-  if(results) {
-    display.push(<span key="results">{` ${results || spacer}` }</span>);
-  } 
-
-  if(!results && beforeOperatorInput) {
+  if(beforeOperatorInput) {
     display.push(<span key="before-input">{beforeOperatorInput}</span>);
   }
 
-  if(!results && operatorInput) {
+  if(operatorInput) {
     display.push(<span key="operator-input"> {operatorInput} </span>);
   }
 
-  if(!results && afterOperatorInput) {
+  if(afterOperatorInput) {
     display.push(<span key="after-input"> {afterOperatorInput} </span>);
   }
 
-  if(!results && display.length === 0) {
+  if( display.length === 0) {
     display.push(<span key="spacer">{ spacer }</span>);
   }
 
