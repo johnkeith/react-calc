@@ -51,9 +51,11 @@ class InputButtons extends Component {
             shouldDisableSignToggleButton ||
             shouldDisableClearButton;
 
+          const buttonClassName = `${row.type} ${key === 'firstRow' ? 'top-buttons' : ''}`;
+
           buttonsRendered.push(
             <button key={`${index}-${row.type}-${row.value}`}
-              className={row.type}
+              className={buttonClassName}
               onClick={() => this.props[row.onClick](row.value) }
               disabled={ shouldDisable } >
               {row.value}
@@ -68,7 +70,7 @@ class InputButtons extends Component {
     }
 
     return (
-      <div>
+      <div className="buttons-container">
         {buttonsRendered}
       </div>
     );

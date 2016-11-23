@@ -8,12 +8,29 @@
   <style>
     body {
       font-size: 26px;
-      margin: 0;
+      margin: 10px 0 0 0;
       padding: 0;
     }
+    .buttons-container {
+      margin: 10px 0 0 0;
+    }
     button {
+      border: 1px solid black;
+      border-top-width: 0;
+      background: white;
       height: 50px;
+      outline: none;
       width: 50px;
+    }
+    button:active {
+      background: black;
+      color: white;
+    }
+    button + button {
+      border-left: 0;
+    }
+    .top-buttons {
+      border-top-width: 1px;
     }
   </style>
   <body>
