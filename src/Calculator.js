@@ -45,6 +45,14 @@ class Calculator extends Component {
     return parseFloat(x) / 100;
   }
 
+  toggleSign(x) {
+    if(x.indexOf('-') === -1) {
+      return `-${x}`;
+    } else {
+      return x.replace('-', '');
+    }
+  }
+
   addToInput(digit) {
     if(this.state.operatorInput) {
       this.addToAfterOperatorInput(digit);
@@ -111,6 +119,18 @@ class Calculator extends Component {
     }
   }
 
+  setSignForValue() {
+    if(this.state.afterOperatorInput) {
+      this.setState({
+        afterOperatorInput: this.toggleSign(this.state.afterOperatorInput)
+      });
+    } else if(this.state.beforeOperatorInput) {
+      this.setState({
+        beforeOperatorInput: this.toggleSign(this.state.beforeOperatorInput)
+      });
+    }
+  }
+
   performAction(actionType) {
     switch(actionType) {
       case 'AC':
@@ -118,6 +138,9 @@ class Calculator extends Component {
         break;
       case '%':
         this.calculatePercentage();
+        break;
+      case '+/-':
+        this.setSignForValue();
         break;
       default:
         return null

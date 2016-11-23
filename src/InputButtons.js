@@ -42,10 +42,14 @@ class InputButtons extends Component {
           const shouldDisableOperatorButton = row.type === 'operator-button' && !this.props.beforeOperatorInput ? true : false;
           const shouldDisableCalculateButton = row.type === 'calculate-button' && (!this.props.beforeOperatorInput || !this.props.operatorInput || !this.props.afterOperatorInput ? true : false);
           const shouldDisablePercentageButton = row.value === '%' && !this.props.beforeOperatorInput;
+          const shouldDisableSignToggleButton = row.value === '+/-' && !this.props.beforeOperatorInput;
+          const shouldDisableClearButton = row.value === 'AC' && !this.props.beforeOperatorInput;
 
           const shouldDisable = shouldDisableOperatorButton ||
             shouldDisableCalculateButton ||
-            shouldDisablePercentageButton;
+            shouldDisablePercentageButton ||
+            shouldDisableSignToggleButton ||
+            shouldDisableClearButton;
 
           buttonsRendered.push(
             <button key={`${index}-${row.type}-${row.value}`}
